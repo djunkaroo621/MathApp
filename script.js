@@ -1,63 +1,36 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
+const questionElement = document.getElementById('question');
+const answerElement = document.getElementById('answer');
+const feedbackElement = document.getElementById('feedback');
+
+function generateRandomQuestion() {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    const question = `${num1} + ${num2}`;
+    const answer = num1 + num2;
+    return { question, answer };
 }
 
-.container {
-    max-width: 400px;
-    margin: 0 auto;
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+function displayQuestion() {
+    const { question } = generateRandomQuestion();
+    questionElement.textContent = `What is ${question}?`;
 }
 
-h1 {
-    text-align: center;
-    font-size: 24px;
-    color: #4CAF50;
+function checkAnswer() {
+    const userAnswer = parseInt(answerElement.value);
+    const { answer } = generateRandomQuestion();
+
+    if (userAnswer === answer) {
+        feedbackElement.textContent = 'Correct! Well done!';
+    } else {
+        feedbackElement.textContent = `Oops! That's not correct. The answer is ${answer}.`;
+    }
+
+    // Clear the input field
+    answerElement.value = '';
+
+    // Generate and display a new question
+    displayQuestion();
 }
 
-.question-box {
-    text-align: center;
-    margin-bottom: 20px;
-    position: relative;
-}
-
-.question-box img {
-    max-width: 100px;
-    position: absolute;
-    top: -20px;
-    left: calc(50% - 50px);
-}
-
-input[type="number"] {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    font-size: 18px;
-    text-align: center;
-    border: 2px solid #4CAF50;
-    border-radius: 5px;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    margin-top: 10px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-p#feedback {
-    text-align: center;
-    font-weight: bold;
-    margin-top: 10px;
-    font-size: 18px;
-    color: #4CAF50;
-}
+// Initial question
+displayQuestion();
